@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_danh_gia_form" model="ir.ui.view">
+        <field name="name">danh.gia.form</field>
+        <field name="model">danh_gia</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nhan_vien_id"/>
+                            <field name="nguoi_danh_gia_id"/>
+                            <field name="loai_danh_gia"/>
+                            <field name="thoi_gian"/>
+                        </group>
+                        <group>
+                            <field name="diem_trung_binh"/>
+                            <field name="ket_luan"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Tiêu chí đánh giá">
+                            <group>
+                                <group>
+                                    <field name="ky_nang_chuyen_mon"/>
+                                    <field name="tinh_than_lam_viec"/>
+                                </group>
+                                <group>
+                                    <field name="kha_nang_giao_tiep"/>
+                                    <field name="kha_nang_lam_viec_nhom"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Nhận xét">
+                            <field name="nhan_xet"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Tree View -->
+    <record id="view_danh_gia_tree" model="ir.ui.view">
+        <field name="name">danh.gia.tree</field>
+        <field name="model">danh_gia</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="nhan_vien_id"/>
+                <field name="nguoi_danh_gia_id"/>
+                <field name="loai_danh_gia"/>
+                <field name="thoi_gian"/>
+                <field name="diem_trung_binh"/>
+                <field name="ket_luan"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Search View -->
+    <record id="view_danh_gia_search" model="ir.ui.view">
+        <field name="name">danh.gia.search</field>
+        <field name="model">danh_gia</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nhan_vien_id"/>
+                <field name="nguoi_danh_gia_id"/>
+                <field name="loai_danh_gia"/>
+                <field name="thoi_gian"/>
+                <filter string="Đánh giá định kỳ" name="dinh_ky" domain="[('loai_danh_gia', '=', 'dinh_ky')]"/>
+                <filter string="Đánh giá tăng lương" name="tang_luong" domain="[('loai_danh_gia', '=', 'tang_luong')]"/>
+                <filter string="Đánh giá thử việc" name="thu_viec" domain="[('loai_danh_gia', '=', 'thu_viec')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Nhân viên" name="nhan_vien" context="{'group_by': 'nhan_vien_id'}"/>
+                    <filter string="Loại đánh giá" name="loai_danh_gia" context="{'group_by': 'loai_danh_gia'}"/>
+                    <filter string="Kết luận" name="ket_luan" context="{'group_by': 'ket_luan'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <!-- Action -->
+    <record id="action_danh_gia" model="ir.actions.act_window">
+        <field name="name">Đánh giá</field>
+        <field name="res_model">danh_gia</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_danh_gia_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo đánh giá mới
+            </p>
+        </field>
+    </record>
+</odoo>

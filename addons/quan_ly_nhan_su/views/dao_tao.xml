@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_dao_tao_form" model="ir.ui.view">
+        <field name="name">dao.tao.form</field>
+        <field name="model">dao_tao</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="ten_khoa_hoc"/>
+                            <field name="nhan_vien_id"/>
+                            <field name="loai_dao_tao"/>
+                            <field name="don_vi_dao_tao"/>
+                        </group>
+                        <group>
+                            <field name="ngay_bat_dau"/>
+                            <field name="ngay_ket_thuc"/>
+                            <field name="so_gio"/>
+                            <field name="chi_phi"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Kết quả đào tạo">
+                            <field name="ket_qua"/>
+                            <field name="chung_chi"/>
+                            <field name="hinh_anh_chung_chi" filename="file_name"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                        <group string="Ghi chú">
+                            <field name="ghi_chu"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Tree View -->
+    <record id="view_dao_tao_tree" model="ir.ui.view">
+        <field name="name">dao.tao.tree</field>
+        <field name="model">dao_tao</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ten_khoa_hoc"/>
+                <field name="nhan_vien_id"/>
+                <field name="loai_dao_tao"/>
+                <field name="don_vi_dao_tao"/>
+                <field name="ngay_bat_dau"/>
+                <field name="ngay_ket_thuc"/>
+                <field name="ket_qua"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Search View -->
+    <record id="view_dao_tao_search" model="ir.ui.view">
+        <field name="name">dao.tao.search</field>
+        <field name="model">dao_tao</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ten_khoa_hoc"/>
+                <field name="nhan_vien_id"/>
+                <field name="loai_dao_tao"/>
+                <field name="don_vi_dao_tao"/>
+                <filter string="Đào tạo nội bộ" name="noi_bo" domain="[('loai_dao_tao', '=', 'noi_bo')]"/>
+                <filter string="Đào tạo bên ngoài" name="ben_ngoai" domain="[('loai_dao_tao', '=', 'ben_ngoai')]"/>
+                <filter string="Tự học" name="tu_hoc" domain="[('loai_dao_tao', '=', 'tu_hoc')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Nhân viên" name="nhan_vien" context="{'group_by': 'nhan_vien_id'}"/>
+                    <filter string="Loại đào tạo" name="loai_dao_tao" context="{'group_by': 'loai_dao_tao'}"/>
+                    <filter string="Kết quả" name="ket_qua" context="{'group_by': 'ket_qua'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <!-- Action -->
+    <record id="action_dao_tao" model="ir.actions.act_window">
+        <field name="name">Đào tạo</field>
+        <field name="res_model">dao_tao</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_dao_tao_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo khóa đào tạo mới
+            </p>
+        </field>
+    </record>
+</odoo>

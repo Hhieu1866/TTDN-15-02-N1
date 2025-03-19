@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_du_an_form" model="ir.ui.view">
+        <field name="name">du_an.form</field>
+        <field name="model">du_an</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="trang_thai" widget="statusbar" options="{'clickable': '1'}" statusbar_visible="chuan_bi,dang_thuc_hien,tam_dung,hoan_thanh,huy_bo"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ma_du_an" placeholder="Mã dự án"/>
+                        </h1>
+                        <h2>
+                            <field name="ten_du_an" placeholder="Tên dự án"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="ngay_bat_dau"/>
+                            <field name="ngay_ket_thuc"/>
+                            <field name="nguoi_quan_ly_id"/>
+                        </group>
+                        <group>
+                            <field name="ngan_sach" widget="monetary"/>
+                            <field name="chi_phi_thuc_te" widget="monetary"/>
+                            <field name="so_luong_cong_viec"/>
+                            <field name="ti_le_hoan_thanh" widget="progressbar"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Mô tả">
+                            <field name="mo_ta"/>
+                        </page>
+                        <page string="Công việc">
+                            <field name="cong_viec_ids">
+                                <tree>
+                                    <field name="ma_cong_viec"/>
+                                    <field name="ten_cong_viec"/>
+                                    <field name="nguoi_phu_trach_id"/>
+                                    <field name="ngay_bat_dau"/>
+                                    <field name="ngay_ket_thuc"/>
+                                    <field name="do_uu_tien"/>
+                                    <field name="trang_thai"/>
+                                    <field name="tien_do" widget="progressbar"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Nguồn lực phân bổ">
+                            <field name="nguon_luc_ids">
+                                <tree>
+                                    <field name="ten_nguon_luc"/>
+                                    <field name="loai_nguon_luc"/>
+                                    <field name="so_luong"/>
+                                    <field name="don_vi"/>
+                                    <field name="don_gia"/>
+                                    <field name="chi_phi"/>
+                                    <field name="ngay_phan_bo"/>
+                                    <field name="trang_thai"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_du_an_tree" model="ir.ui.view">
+        <field name="name">du_an.tree</field>
+        <field name="model">du_an</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ma_du_an"/>
+                <field name="ten_du_an"/>
+                <field name="nguoi_quan_ly_id"/>
+                <field name="ngay_bat_dau"/>
+                <field name="ngay_ket_thuc"/>
+                <field name="ngan_sach"/>
+                <field name="chi_phi_thuc_te"/>
+                <field name="so_luong_cong_viec"/>
+                <field name="ti_le_hoan_thanh" widget="progressbar"/>
+                <field name="trang_thai"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_du_an_search" model="ir.ui.view">
+        <field name="name">du_an.search</field>
+        <field name="model">du_an</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ma_du_an"/>
+                <field name="ten_du_an"/>
+                <field name="nguoi_quan_ly_id"/>
+                <filter string="Đang thực hiện" name="dang_thuc_hien" domain="[('trang_thai', '=', 'dang_thuc_hien')]"/>
+                <filter string="Hoàn thành" name="hoan_thanh" domain="[('trang_thai', '=', 'hoan_thanh')]"/>
+                <filter string="Tạm dừng" name="tam_dung" domain="[('trang_thai', '=', 'tam_dung')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Trạng thái" name="group_by_trang_thai" context="{'group_by': 'trang_thai'}"/>
+                    <filter string="Người quản lý" name="group_by_nguoi_quan_ly" context="{'group_by': 'nguoi_quan_ly_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_du_an_kanban" model="ir.ui.view">
+        <field name="name">du_an.kanban</field>
+        <field name="model">du_an</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="trang_thai" class="o_kanban_small_column">
+                <field name="id"/>
+                <field name="ma_du_an"/>
+                <field name="ten_du_an"/>
+                <field name="nguoi_quan_ly_id"/>
+                <field name="trang_thai"/>
+                <field name="ti_le_hoan_thanh"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="ten_du_an"/>
+                                </strong>
+                                <div class="o_kanban_record_subtitle">
+                                    <field name="ma_du_an"/>
+                                </div>
+                                <div>
+                                    <field name="nguoi_quan_ly_id"/>
+                                </div>
+                                <div class="oe_kanban_bottom_left">
+                                    <field name="ti_le_hoan_thanh" widget="progressbar"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_du_an" model="ir.actions.act_window">
+        <field name="name">Dự án</field>
+        <field name="res_model">du_an</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_du_an_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo dự án mới
+            </p>
+        </field>
+    </record>
+</odoo>

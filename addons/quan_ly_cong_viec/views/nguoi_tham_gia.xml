@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_nguoi_tham_gia_form" model="ir.ui.view">
+        <field name="name">nguoi_tham_gia.form</field>
+        <field name="model">nguoi_tham_gia</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="cong_viec_id"/>
+                            <field name="du_an_id" readonly="1"/>
+                            <field name="ten_cong_viec" readonly="1"/>
+                            <field name="nhan_vien_id"/>
+                            <field name="ten_nhan_vien" readonly="1"/>
+                            <field name="phong_ban_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="vai_tro"/>
+                            <field name="ngay_bat_dau"/>
+                            <field name="ngay_ket_thuc"/>
+                            <field name="so_gio_du_kien"/>
+                        </group>
+                    </group>
+                    <group string="Ghi chú">
+                        <field name="ghi_chu" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_nguoi_tham_gia_tree" model="ir.ui.view">
+        <field name="name">nguoi_tham_gia.tree</field>
+        <field name="model">nguoi_tham_gia</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="cong_viec_id"/>
+                <field name="du_an_id"/>
+                <field name="nhan_vien_id"/>
+                <field name="ten_nhan_vien"/>
+                <field name="phong_ban_id"/>
+                <field name="vai_tro"/>
+                <field name="ngay_bat_dau"/>
+                <field name="ngay_ket_thuc"/>
+                <field name="so_gio_du_kien"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_nguoi_tham_gia_search" model="ir.ui.view">
+        <field name="name">nguoi_tham_gia.search</field>
+        <field name="model">nguoi_tham_gia</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nhan_vien_id"/>
+                <field name="ten_nhan_vien"/>
+                <field name="cong_viec_id"/>
+                <field name="du_an_id"/>
+                <filter string="Phụ trách" name="phu_trach" domain="[('vai_tro', '=', 'phu_trach')]"/>
+                <filter string="Thực hiện" name="thuc_hien" domain="[('vai_tro', '=', 'thuc_hien')]"/>
+                <filter string="Hỗ trợ" name="ho_tro" domain="[('vai_tro', '=', 'ho_tro')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Dự án" name="group_by_du_an" context="{'group_by': 'du_an_id'}"/>
+                    <filter string="Công việc" name="group_by_cong_viec" context="{'group_by': 'cong_viec_id'}"/>
+                    <filter string="Nhân viên" name="group_by_nhan_vien" context="{'group_by': 'nhan_vien_id'}"/>
+                    <filter string="Vai trò" name="group_by_vai_tro" context="{'group_by': 'vai_tro'}"/>
+                    <filter string="Phòng ban" name="group_by_phong_ban" context="{'group_by': 'phong_ban_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_nguoi_tham_gia" model="ir.actions.act_window">
+        <field name="name">Người tham gia</field>
+        <field name="res_model">nguoi_tham_gia</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_nguoi_tham_gia_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Thêm người tham gia vào công việc
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_hop_dong_form" model="ir.ui.view">
+        <field name="name">hop.dong.form</field>
+        <field name="model">hop_dong</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="trang_thai" widget="statusbar" options="{'clickable': '1'}" 
+                           statusbar_visible="draft,waiting,active,expired,terminated"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ma_hop_dong" placeholder="Mã hợp đồng"/>
+                        </h1>
+                        <h2>
+                            <field name="ten_hop_dong" placeholder="Tên hợp đồng"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="nhan_vien_id"/>
+                            <field name="loai_hop_dong"/>
+                            <field name="ngay_bat_dau"/>
+                            <field name="ngay_ket_thuc"/>
+                        </group>
+                        <group>
+                            <field name="luong_co_ban"/>
+                            <field name="phu_cap"/>
+                            <field name="ngay_ky"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="File đính kèm">
+                            <group>
+                                <field name="file_hop_dong" filename="file_name"/>
+                                <field name="file_name" invisible="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Tree View -->
+    <record id="view_hop_dong_tree" model="ir.ui.view">
+        <field name="name">hop.dong.tree</field>
+        <field name="model">hop_dong</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ma_hop_dong"/>
+                <field name="ten_hop_dong"/>
+                <field name="nhan_vien_id"/>
+                <field name="loai_hop_dong"/>
+                <field name="ngay_bat_dau"/>
+                <field name="ngay_ket_thuc"/>
+                <field name="luong_co_ban"/>
+                <field name="trang_thai"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Search View -->
+    <record id="view_hop_dong_search" model="ir.ui.view">
+        <field name="name">hop.dong.search</field>
+        <field name="model">hop_dong</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ma_hop_dong"/>
+                <field name="ten_hop_dong"/>
+                <field name="nhan_vien_id"/>
+                <field name="loai_hop_dong"/>
+                <filter string="Dự thảo" name="draft" domain="[('trang_thai', '=', 'draft')]"/>
+                <filter string="Chờ ký" name="waiting" domain="[('trang_thai', '=', 'waiting')]"/>
+                <filter string="Đang hiệu lực" name="active" domain="[('trang_thai', '=', 'active')]"/>
+                <filter string="Hết hiệu lực" name="expired" domain="[('trang_thai', '=', 'expired')]"/>
+                <filter string="Đã chấm dứt" name="terminated" domain="[('trang_thai', '=', 'terminated')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Nhân viên" name="nhan_vien" context="{'group_by': 'nhan_vien_id'}"/>
+                    <filter string="Loại hợp đồng" name="loai_hop_dong" context="{'group_by': 'loai_hop_dong'}"/>
+                    <filter string="Trạng thái" name="trang_thai" context="{'group_by': 'trang_thai'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <!-- Action -->
+    <record id="action_hop_dong" model="ir.actions.act_window">
+        <field name="name">Hợp đồng</field>
+        <field name="res_model">hop_dong</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_hop_dong_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo hợp đồng mới
+            </p>
+        </field>
+    </record>
+</odoo>

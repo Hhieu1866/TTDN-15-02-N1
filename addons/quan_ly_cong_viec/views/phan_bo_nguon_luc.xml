@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_phan_bo_nguon_luc_form" model="ir.ui.view">
+        <field name="name">phan_bo_nguon_luc.form</field>
+        <field name="model">phan_bo_nguon_luc</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="trang_thai" widget="statusbar" options="{'clickable': '1'}" statusbar_visible="du_kien,da_phan_bo,dang_su_dung,da_hoan_tra"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ten_nguon_luc" placeholder="Tên nguồn lực"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="loai_nguon_luc"/>
+                            <field name="du_an_id"/>
+                            <field name="cong_viec_id" domain="[('du_an_id', '=', du_an_id)]"/>
+                            <field name="nhan_vien_id"/>
+                        </group>
+                        <group>
+                            <field name="so_luong"/>
+                            <field name="don_vi"/>
+                            <field name="don_gia"/>
+                            <field name="chi_phi"/>
+                            <field name="ngay_phan_bo"/>
+                            <field name="ngay_bat_dau"/>
+                            <field name="ngay_ket_thuc"/>
+                        </group>
+                    </group>
+                    <group string="Mô tả">
+                        <field name="mo_ta" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_phan_bo_nguon_luc_tree" model="ir.ui.view">
+        <field name="name">phan_bo_nguon_luc.tree</field>
+        <field name="model">phan_bo_nguon_luc</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ten_nguon_luc"/>
+                <field name="loai_nguon_luc"/>
+                <field name="du_an_id"/>
+                <field name="cong_viec_id"/>
+                <field name="nhan_vien_id"/>
+                <field name="so_luong"/>
+                <field name="don_vi"/>
+                <field name="don_gia"/>
+                <field name="chi_phi" sum="Tổng chi phí"/>
+                <field name="ngay_phan_bo"/>
+                <field name="trang_thai"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_phan_bo_nguon_luc_search" model="ir.ui.view">
+        <field name="name">phan_bo_nguon_luc.search</field>
+        <field name="model">phan_bo_nguon_luc</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ten_nguon_luc"/>
+                <field name="du_an_id"/>
+                <field name="cong_viec_id"/>
+                <field name="nhan_vien_id"/>
+                <filter string="Dự kiến" name="du_kien" domain="[('trang_thai', '=', 'du_kien')]"/>
+                <filter string="Đã phân bổ" name="da_phan_bo" domain="[('trang_thai', '=', 'da_phan_bo')]"/>
+                <filter string="Đang sử dụng" name="dang_su_dung" domain="[('trang_thai', '=', 'dang_su_dung')]"/>
+                <filter string="Nhân lực" name="nhan_luc" domain="[('loai_nguon_luc', '=', 'nhan_luc')]"/>
+                <filter string="Tài chính" name="tai_chinh" domain="[('loai_nguon_luc', '=', 'tai_chinh')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Dự án" name="group_by_du_an" context="{'group_by': 'du_an_id'}"/>
+                    <filter string="Công việc" name="group_by_cong_viec" context="{'group_by': 'cong_viec_id'}"/>
+                    <filter string="Loại nguồn lực" name="group_by_loai_nguon_luc" context="{'group_by': 'loai_nguon_luc'}"/>
+                    <filter string="Trạng thái" name="group_by_trang_thai" context="{'group_by': 'trang_thai'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_phan_bo_nguon_luc_pivot" model="ir.ui.view">
+        <field name="name">phan_bo_nguon_luc.pivot</field>
+        <field name="model">phan_bo_nguon_luc</field>
+        <field name="arch" type="xml">
+            <pivot string="Phân tích nguồn lực">
+                <field name="du_an_id" type="row"/>
+                <field name="loai_nguon_luc" type="col"/>
+                <field name="chi_phi" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_phan_bo_nguon_luc" model="ir.actions.act_window">
+        <field name="name">Phân bổ nguồn lực</field>
+        <field name="res_model">phan_bo_nguon_luc</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="search_view_id" ref="view_phan_bo_nguon_luc_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo phân bổ nguồn lực mới
+            </p>
+        </field>
+    </record>
+</odoo>
