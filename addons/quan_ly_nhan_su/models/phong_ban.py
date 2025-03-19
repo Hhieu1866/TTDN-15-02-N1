@@ -25,11 +25,6 @@ class PhongBan(models.Model):
         ('ten_phong_ban_unique', 'unique(ten_phong_ban)', 'Tên phòng ban phải là duy nhất!'),
     ]
     
-    @api.model
-    def create(self, vals):
-        if vals.get('ma_phong_ban', _('New')) == _('New'):
-            vals['ma_phong_ban'] = self.env['ir.sequence'].next_by_code('phong_ban') or _('New')
-        return super(PhongBan, self).create(vals)
     
     @api.depends('nhan_vien_ids')
     def _compute_so_luong_nhan_vien(self):
