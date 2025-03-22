@@ -6,6 +6,8 @@
 ![Python](https://img.shields.io/badge/python-v3.8+-blue.svg)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 
+# Giao diện
+![image](https://github.com/user-attachments/assets/70c6d5bb-5648-4ecf-9312-8f9524c01c08)
 
 
 # 1. Cài đặt công cụ, môi trường và các thư viện cần thiết
